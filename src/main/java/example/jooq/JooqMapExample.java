@@ -1,32 +1,31 @@
 package example.jooq;
 
+import example.jooq.generated.tables.records.AuthorRecord;
 import org.jooq.DSLContext;
+import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 import static example.jooq.generated.tables.Author.AUTHOR;
-import static java.lang.String.format;
 
 @Component
-public class JooqRecordExample implements CommandLineRunner {
+public class JooqMapExample implements CommandLineRunner {
     private final DSLContext create;
 
     @Autowired
-    public JooqRecordExample(DSLContext create) {
+    public JooqMapExample(DSLContext create) {
         this.create = create;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        final List<String> messages = create.selectFrom(AUTHOR).fetch(author -> {
+        final Result<AuthorRecord> authors = create.selectFrom(AUTHOR).fetch();
+        for (AuthorRecord author : authors) {
             final Integer id = author.getId();
             final String firstName = author.getFirstName();
             final String lastName = author.getLastName();
-            return format("Class: %s, Id: %d, author: %s %s\n", getClass().getSimpleName(), id, firstName, lastName);
-        });
-        messages.forEach(System.out::print);
+            System.out.printf("Class: %s, Id: %d, author: %s %s\n", getClass().getSimpleName(), id, firstName, lastName);
+        }
     }
 }
