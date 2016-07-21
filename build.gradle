@@ -65,6 +65,7 @@ jooq {
                 records = true
                 immutablePojos = true
                 fluentSetters = true
+                daos = true
             }
             target {
                 packageName = 'example.jooq.generated'
