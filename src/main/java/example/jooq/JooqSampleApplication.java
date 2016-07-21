@@ -9,6 +9,5 @@ import java.io.IOException;
 public class JooqSampleApplication {
     public static void main(String[] args) throws IOException {
         SpringApplication.run(JooqSampleApplication.class, args);
-        System.in.read();
     }
 }
