@@ -1,3 +1,10 @@
+CREATE TABLE author
+(
+  id SERIAL PRIMARY KEY NOT NULL,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL
+);
+
 CREATE TABLE amount
 (
   id SERIAL NOT NULL,
