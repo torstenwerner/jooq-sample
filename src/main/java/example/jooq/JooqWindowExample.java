@@ -22,7 +22,8 @@ public class JooqWindowExample implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        final int limit = args.length == 1 ? Integer.valueOf(args[0]) : Integer.MAX_VALUE;
+        final int offset = args.length > 0 ? Integer.valueOf(args[0]) : 0;
+        final int limit = args.length > 1 ? Integer.valueOf(args[1]) : Integer.MAX_VALUE;
 
         final Amount a = AMOUNT.as("a");
 
@@ -37,7 +38,7 @@ public class JooqWindowExample implements CommandLineRunner {
                 select(a.ID, a.CUSTOMER_ID, a.TRANSACTION, totalField).
                 from(a).
                 orderBy(a.CUSTOMER_ID.asc(), a.ID.desc()).
-                limit(limit).
+                limit(offset, limit).
                 fetch();
 
         for (Record amount : amounts) {
