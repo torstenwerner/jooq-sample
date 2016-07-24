@@ -1,6 +1,7 @@
 package example.jooq;
 
 import example.jooq.generated.tables.Amount;
+import example.jooq.generated.tables.records.AmountRecord;
 import org.jooq.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -42,9 +43,10 @@ public class JooqWindowExample implements CommandLineRunner {
                 fetch();
 
         for (Record amount : amounts) {
-            final int id = amount.getValue(AMOUNT.ID);
-            final int customerId = amount.getValue(AMOUNT.CUSTOMER_ID);
-            final BigDecimal transaction = amount.getValue(AMOUNT.TRANSACTION);
+            final AmountRecord amountRecord = amount.into(a);
+            final int id = amountRecord.getId();
+            final int customerId = amountRecord.getCustomerId();
+            final BigDecimal transaction = amountRecord.getTransaction();
             final BigDecimal total = amount.getValue(totalField);
             System.out.printf("amount id: %d, customer: %d, txn: %6.2f, total: %6.2f\n", id, customerId, transaction, total);
         }
