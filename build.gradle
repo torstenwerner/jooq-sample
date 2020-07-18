@@ -15,6 +15,7 @@ repositories {
 }
 
 dependencies {
+    jooqRuntime 'org.postgresql:postgresql'
     implementation 'org.springframework.boot:spring-boot-starter-jooq'
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -36,12 +37,12 @@ jooq {
             schema = 'public'
         }
         generator {
-            name = 'org.jooq.util.DefaultGenerator'
+            name = 'org.jooq.codegen.DefaultGenerator'
             strategy {
-                name = 'org.jooq.util.DefaultGeneratorStrategy'
+                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
             }
             database {
-                name = 'org.jooq.util.postgres.PostgresDatabase'
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
                 inputSchema = 'public'
             }
             generate {
