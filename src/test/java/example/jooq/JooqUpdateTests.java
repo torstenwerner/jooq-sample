@@ -1,5 +1,6 @@
 package example.jooq;
 
+import example.jooq.generated.tables.records.AuthorRecord;
 import org.jooq.DSLContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,20 @@ public class JooqUpdateTests {
                 .fetchOne(AUTHOR.FIRST_NAME);
 
         assertThat(firstName).isEqualTo("Hans");
+    }
+
+    @Test
+    void shouldUpdateWithReturningNewValues(@Autowired DSLContext create) {
+
+        final AuthorRecord updatedAuthor = create
+                .update(AUTHOR)
+                .set(AUTHOR.FIRST_NAME, "Hans")
+                .where(AUTHOR.LAST_NAME.eq("von Mythenmetz"))
+                .returning(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+                .fetchOne();
+
+        assertThat(updatedAuthor.getFirstName()).isEqualTo("Hans");
+        assertThat(updatedAuthor.getLastName()).isEqualTo("von Mythenmetz");
+
     }
 }
