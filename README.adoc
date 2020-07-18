@@ -1,0 +1,20 @@
+= Playground for jooq
+
+JOOQ is a great SQL library for Java: https://www.jooq.org/
+
+== Instructions
+
+Start postgres using docker:
+
+----
+docker run --name postgres -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgres
+----
+
+Create a database _test_ with owner _postgres_:
+
+----
+create database test with owner postgres;
+----
+
+Initialize the database from file `src/main/sql/create-ddl-postgres.sql`.
+Test it by executing the statement in `src/main/sql/amount.sql`.
