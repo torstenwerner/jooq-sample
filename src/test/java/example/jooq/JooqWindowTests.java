@@ -3,28 +3,21 @@ package example.jooq;
 import example.jooq.generated.tables.Amount;
 import example.jooq.generated.tables.records.AmountRecord;
 import org.jooq.*;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 
 import static example.jooq.generated.tables.Amount.AMOUNT;
 import static org.jooq.impl.DSL.sum;
 
-@Component
-public class JooqWindowExample implements CommandLineRunner {
-    private final DSLContext create;
-
-    @Autowired
-    public JooqWindowExample(DSLContext create) {
-        this.create = create;
-    }
-
-    @Override
-    public void run(String... args) {
-        final int offset = args.length > 0 ? Integer.parseInt(args[0]) : 0;
-        final int limit = args.length > 1 ? Integer.parseInt(args[1]) : Integer.MAX_VALUE;
+@SpringBootTest
+public class JooqWindowTests {
+    @Test
+    void shouldFindAllAuthors(@Autowired DSLContext create) {
+        final int offset = 0;
+        final int limit = Integer.MAX_VALUE;
 
         final Amount a = AMOUNT.as("a");
 

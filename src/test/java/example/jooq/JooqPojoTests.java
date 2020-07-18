@@ -2,25 +2,18 @@ package example.jooq;
 
 import example.jooq.generated.tables.pojos.Author;
 import org.jooq.DSLContext;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
 import static example.jooq.generated.tables.Author.AUTHOR;
 
-@Component
-public class JooqPojoExample implements CommandLineRunner {
-    private final DSLContext create;
-
-    @Autowired
-    public JooqPojoExample(DSLContext create) {
-        this.create = create;
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
+@SpringBootTest
+public class JooqPojoTests {
+    @Test
+    void shouldFindAllAuthors(@Autowired DSLContext create) {
         final List<Author> authors = create.select().from(AUTHOR).fetchInto(Author.class);
         for (Author author : authors) {
             final Integer id = author.getId();

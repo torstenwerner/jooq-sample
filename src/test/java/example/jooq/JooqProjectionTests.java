@@ -2,9 +2,9 @@ package example.jooq;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
@@ -13,17 +13,10 @@ import static java.lang.String.format;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.val;
 
-@Component
-public class JooqProjectionExample implements CommandLineRunner {
-    private final DSLContext create;
-
-    @Autowired
-    public JooqProjectionExample(DSLContext create) {
-        this.create = create;
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
+@SpringBootTest
+public class JooqProjectionTests {
+    @Test
+    void shouldFindAllAuthors(@Autowired DSLContext create) {
         final Field<String> field = concat(
                 val(format("Class: %s, Id: ", getClass().getSimpleName())),
                 AUTHOR.ID,

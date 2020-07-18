@@ -4,24 +4,19 @@ import example.jooq.generated.tables.daos.AuthorDao;
 import example.jooq.generated.tables.pojos.Author;
 import org.jooq.Configuration;
 import org.jooq.impl.DefaultConfiguration;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.sql.DataSource;
 
-@Component
-public class JooqDaoExample implements CommandLineRunner {
-    private final AuthorDao authorDao;
-
-    @Autowired
-    public JooqDaoExample(DataSource dataSource) {
+@SpringBootTest
+public class JooqDaoTests {
+    @Test
+    void shouldFindAllAuthors(@Autowired DataSource dataSource) {
         final Configuration configuration = new DefaultConfiguration().set(dataSource);
-        authorDao = new AuthorDao(configuration);
-    }
+        final AuthorDao authorDao = new AuthorDao(configuration);
 
-    @Override
-    public void run(String... args) throws Exception {
         for (Author author : authorDao.findAll()) {
             final Integer id = author.getId();
             final String firstName = author.getFirstName();

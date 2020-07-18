@@ -3,23 +3,16 @@ package example.jooq;
 import example.jooq.generated.tables.records.AuthorRecord;
 import org.jooq.DSLContext;
 import org.jooq.Result;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static example.jooq.generated.tables.Author.AUTHOR;
 
-@Component
-public class JooqMapExample implements CommandLineRunner {
-    private final DSLContext create;
-
-    @Autowired
-    public JooqMapExample(DSLContext create) {
-        this.create = create;
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
+@SpringBootTest
+public class JooqMapTests {
+    @Test
+    void shouldFindAllAuthors(@Autowired DSLContext create) {
         final Result<AuthorRecord> authors = create.selectFrom(AUTHOR).fetch();
         for (AuthorRecord author : authors) {
             final Integer id = author.getId();

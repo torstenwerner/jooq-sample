@@ -1,28 +1,18 @@
 package example.jooq;
 
-import example.jooq.generated.tables.pojos.Author;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static example.jooq.generated.tables.Author.AUTHOR;
 
-@Component
-public class JooqFlexExample implements CommandLineRunner {
-    private final DSLContext create;
-
-    @Autowired
-    public JooqFlexExample(DSLContext create) {
-        this.create = create;
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
+@SpringBootTest
+public class JooqFlexTests {
+    @Test
+    void shouldFindAllAuthors(@Autowired DSLContext create) {
         final Result<Record> authors = create.select().from(AUTHOR).fetch();
         for (Record author : authors) {
             final Integer id = author.getValue(AUTHOR.ID);

@@ -18,3 +18,6 @@ INSERT INTO amount (id, customer_id, amount) VALUES (2, 1, 42.23);
 INSERT INTO amount (id, customer_id, amount) VALUES (3, 1, -5.00);
 INSERT INTO amount (id, customer_id, amount) VALUES (2, 2, 49.99);
 INSERT INTO amount (id, customer_id, amount) VALUES (1, 2, -17.50);
+
+INSERT INTO author (first_name, last_name) VALUES ('Hildegunst', 'von Mythenmetz');
+INSERT INTO author (first_name, last_name) VALUES ('Danzelot', 'von Silbendrechsler');
