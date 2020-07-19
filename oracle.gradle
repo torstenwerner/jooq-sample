@@ -1,0 +1,11 @@
+// Database related properties
+
+ext {
+    dbDriverMaven = "com.oracle.database.jdbc:ojdbc10:19.7.0.0"
+    dbDriverClass = "oracle.jdbc.OracleDriver"
+    dbUrl = "jdbc:oracle:thin:@localhost:1521:XE"
+    dbUser = "C##test"
+    dbPassword = "test"
+    dbSchema = "C##test"
+    jooqDriverClass = "org.jooq.meta.oracle.OracleDatabase"
+}

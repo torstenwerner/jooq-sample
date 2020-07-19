@@ -6,6 +6,7 @@ plugins {
 }
 
 apply from: "postgresql.gradle"
+//apply from: "oracle.gradle"
 
 group = 'example.jooq'
 version = '0.0.1-SNAPSHOT'
