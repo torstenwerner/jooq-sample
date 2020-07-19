@@ -17,7 +17,7 @@ public class JooqFlexTests {
         for (Record author : authors) {
             final Integer id = author.getValue(AUTHOR.ID);
             final String firstName = author.getValue(AUTHOR.FIRST_NAME);
-            final String lastName = author.getValue(author.field("LAST_NAME"), String.class);
+            final String lastName = author.getValue(author.field("last_name"), String.class);
             System.out.printf("Class: %s, Id: %d, author: %s %s\n", getClass().getSimpleName(), id, firstName, lastName);
         }
     }
