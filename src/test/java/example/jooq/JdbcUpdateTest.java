@@ -15,6 +15,10 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assumptions.assumeThat;
 
+/**
+ * Using jdbc for statements with output parameters is not easy. See https://stackoverflow.com/a/10465239/1581276
+ * for an example.
+ */
 @SpringBootTest
 public class JdbcUpdateTest {
     @Test
