@@ -1,0 +1,11 @@
+// Database related properties
+
+ext {
+    dbDriverMaven = "org.postgresql:postgresql"
+    dbDriverClass = "org.postgresql.Driver"
+    dbUrl = "jdbc:postgresql://localhost:5432/test"
+    dbUser = "postgres"
+    dbPassword = "postgres"
+    dbSchema = "public"
+    jooqDriverClass = "org.jooq.meta.postgres.PostgresDatabase"
+}

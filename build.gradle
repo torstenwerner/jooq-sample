@@ -5,6 +5,8 @@ plugins {
     id "nu.studer.jooq" version "4.2"
 }
 
+apply from: "postgresql.gradle"
+
 group = 'example.jooq'
 version = '0.0.1-SNAPSHOT'
 
@@ -15,9 +17,9 @@ repositories {
 }
 
 dependencies {
-    jooqRuntime 'org.postgresql:postgresql'
+    jooqRuntime dbDriverMaven
     implementation 'org.springframework.boot:spring-boot-starter-jooq'
-    runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly dbDriverMaven
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
@@ -30,11 +32,11 @@ test {
 jooq {
     sample(sourceSets.main) {
         jdbc {
-            driver = 'org.postgresql.Driver'
-            url = 'jdbc:postgresql://localhost:5432/test'
-            user = 'postgres'
-            password = 'postgres'
-            schema = 'public'
+            driver = dbDriverClass
+            url = dbUrl
+            user = dbUser
+            password = dbPassword
+            schema = dbSchema
         }
         generator {
             name = 'org.jooq.codegen.DefaultGenerator'
@@ -42,8 +44,8 @@ jooq {
                 name = 'org.jooq.codegen.DefaultGeneratorStrategy'
             }
             database {
-                name = 'org.jooq.meta.postgres.PostgresDatabase'
-                inputSchema = 'public'
+                name = jooqDriverClass
+                inputSchema = dbSchema
             }
             generate {
                 relations = true
