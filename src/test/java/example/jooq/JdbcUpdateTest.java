@@ -9,9 +9,7 @@ import org.springframework.core.io.Resource;
 
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,16 +27,29 @@ public class JdbcUpdateTest {
         final String sqlText = IOUtils.toString(sql.getInputStream(), UTF_8);
 
         try (final Connection connection = dataSource.getConnection();
-             final PreparedStatement statement = connection.prepareStatement(sqlText)) {
+             final CallableStatement statement = connection.prepareCall(sqlText)) {
 
             connection.setAutoCommit(false);
             statement.setQueryTimeout(30); // seconds
 
             statement.setString(1, "Hans");
             statement.setString(2, "von Mythenmetz");
-            final long updatedRows = statement.executeLargeUpdate();
+            statement.registerOutParameter(3, Types.INTEGER);
+            statement.registerOutParameter(4, -10); // OracleTypes.CURSOR
+            statement.registerOutParameter(5, -10); // OracleTypes.CURSOR
 
+            final boolean result = statement.execute();
+
+            assertThat(result).isFalse();
+
+            final int updatedRows = statement.getInt(3);
             assertThat(updatedRows).isEqualTo(1);
+            final ResultSet firstName = (ResultSet) statement.getObject(4);
+            assertThat(firstName.next()).isTrue();
+            assertThat(firstName.getString(1)).isEqualTo("Hans");
+            final ResultSet lastName = (ResultSet) statement.getObject(5);
+            assertThat(lastName.next()).isTrue();
+            assertThat(lastName.getString(1)).isEqualTo("von Mythenmetz");
 
             connection.rollback();
             connection.setAutoCommit(true);
