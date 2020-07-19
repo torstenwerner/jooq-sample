@@ -1,0 +1,8 @@
+// Jooq related properties
+// professional edition
+
+ext {
+    jooqMaven = "org.jooq.pro:jooq:3.12.3"
+    jooqVersion = "3.12.3"
+    jooqEdition = "PRO"
+}

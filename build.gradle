@@ -8,6 +8,9 @@ plugins {
 apply from: "postgresql.gradle"
 //apply from: "oracle.gradle"
 
+apply from: "jooq-oss.gradle"
+//apply from: "jooq-pro.gradle"
+
 group = 'example.jooq'
 version = '0.0.1-SNAPSHOT'
 
@@ -19,7 +22,10 @@ repositories {
 
 dependencies {
     jooqRuntime dbDriverMaven
-    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    implementation('org.springframework.boot:spring-boot-starter-jooq') {
+        exclude group: 'org.jooq', module: 'jooq'
+    }
+    implementation jooqMaven
     runtimeOnly dbDriverMaven
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -31,6 +37,8 @@ test {
 }
 
 jooq {
+    version = jooqVersion
+    edition = jooqEdition
     sample(sourceSets.main) {
         jdbc {
             driver = dbDriverClass

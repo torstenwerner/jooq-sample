@@ -1,6 +1,6 @@
 create table author
 (
-    id         int           not null
+    id         NUMBER(9)     not null
         constraint AUTHOR_PK primary key,
     first_name VARCHAR2(255) not null,
     last_name  VARCHAR2(255) not null
@@ -8,8 +8,8 @@ create table author
 
 create table amount
 (
-    id          int          not null,
-    customer_id int          not null,
+    id          NUMBER(9)    not null,
+    customer_id NUMBER(9)    not null,
     amount      NUMBER(9, 2) not null,
     CONSTRAINT amount_pk PRIMARY KEY (id, customer_id)
 );

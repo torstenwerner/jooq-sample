@@ -1,0 +1,8 @@
+// Jooq related properties
+// open source edition
+
+ext {
+    jooqMaven = "org.jooq:jooq"
+    jooqVersion = "3.12.3"
+    jooqEdition = "OSS"
+}
