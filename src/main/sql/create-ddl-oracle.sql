@@ -1,3 +1,7 @@
+-- CREATE USER C##test identified by test;
+-- GRANT CONNECT, RESOURCE TO C##test;
+-- GRANT UNLIMITED TABLESPACE TO C##test;
+
 create table author
 (
     id         NUMBER(9)     not null
