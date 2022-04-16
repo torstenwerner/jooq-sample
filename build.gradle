@@ -1,15 +1,14 @@
+import nu.studer.gradle.jooq.JooqEdition
+
 plugins {
     id 'org.springframework.boot' version '2.6.6'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id "nu.studer.jooq" version "4.2"
+    id "nu.studer.jooq" version "7.1.1"
 }
 
 apply from: "postgresql.gradle"
 //apply from: "oracle.gradle"
-
-apply from: "jooq-oss.gradle"
-//apply from: "jooq-pro.gradle"
 
 group = 'example.jooq'
 version = '0.0.1-SNAPSHOT'
@@ -17,17 +16,16 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = "11"
 
 repositories {
+//    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
-    jooqRuntime dbDriverMaven
-    implementation('org.springframework.boot:spring-boot-starter-jooq') {
-        exclude group: 'org.jooq', module: 'jooq'
-    }
-    implementation jooqMaven
+    jooqGenerator(dbDriverMaven)
+    jooqGenerator("jakarta.xml.bind:jakarta.xml.bind-api:3.0.1")
+    implementation('org.springframework.boot:spring-boot-starter-jooq')
     implementation 'commons-io:commons-io:2.7'
-    runtimeOnly dbDriverMaven
+    runtimeOnly(dbDriverMaven)
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
@@ -38,36 +36,42 @@ test {
 }
 
 jooq {
-    version = jooqVersion
-    edition = jooqEdition
-    sample(sourceSets.main) {
-        jdbc {
-            driver = dbDriverClass
-            url = dbUrl
-            user = dbUser
-            password = dbPassword
-            schema = dbSchema
-        }
-        generator {
-            name = 'org.jooq.codegen.DefaultGenerator'
-            strategy {
-                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
-            }
-            database {
-                name = jooqDriverClass
-                inputSchema = dbSchema
-            }
-            generate {
-                relations = true
-                deprecated = false
-                records = true
-                pojos = true
-                immutablePojos = false
-                fluentSetters = true
-                daos = true
-            }
-            target {
-                packageName = 'example.jooq.generated'
+    version = "3.16.5"
+    edition = JooqEdition.OSS
+//    edition = JooqEdition.PRO_JAVA_11
+    
+    configurations {
+        main {
+            generationTool {
+                jdbc {
+                    driver = dbDriverClass
+                    url = dbUrl
+                    user = dbUser
+                    password = dbPassword
+                    schema = dbSchema
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    strategy {
+                        name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+                    }
+                    database {
+                        name = jooqDriverClass
+                        inputSchema = dbSchema
+                    }
+                    generate {
+                        relations = true
+                        deprecated = false
+                        records = true
+                        pojos = true
+                        immutablePojos = false
+                        fluentSetters = true
+                        daos = true
+                    }
+                    target {
+                        packageName = 'example.jooq.generated'
+                    }
+                }
             }
         }
     }
