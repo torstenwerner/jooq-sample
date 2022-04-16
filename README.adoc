@@ -10,6 +10,7 @@ Start postgres using docker:
 docker run --name postgres -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgres
 ----
 
+Configure a database client with jdbc url jdbc:postgresql://localhost:5432/postgres and credentials postgres + postgres.
 Create a database _test_ with owner _postgres_:
 
 ----
