@@ -16,9 +16,9 @@ Create a database _test_ with owner _postgres_:
 create database test with owner postgres;
 ----
 
-Initialize the database from file `src/main/sql/create-ddl-postgres.sql`.
-Test it by executing the statement in `src/main/sql/amount.sql`.
+Initialize the database from file link:src/main/sql/create-ddl-postgres.sql[].
+Test it by executing the statement in link:src/main/sql/amount.sql[].
 Execute `./gradlew build` to build and test the application.
 
 It is possible to use oracle db with jooq pro.
-Please look for commented lines on how to enable it.
+Please look for commented lines in file link:build.gradle[] on how to enable it.
