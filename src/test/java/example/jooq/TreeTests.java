@@ -1,13 +1,15 @@
 package example.jooq;
 
+import org.jooq.CommonTableExpression;
 import org.jooq.DSLContext;
+import org.jooq.Record2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static example.jooq.generated.Tables.COMMENT;
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 @SpringBootTest
 public class TreeTests {
@@ -30,6 +32,25 @@ public class TreeTests {
                                         .where(COMMENT.comment().ARTICLE_ID.isNotNull())))
                 .selectFrom(commentArticle)
                 .limit(10)
+                .fetch()
+                .format(System.out);
+    }
+
+    @Test
+    void shouldAddArticleIdToAllComments() {
+
+        final var commentArticle = name("comment_article");
+        dc.withRecursive(commentArticle)
+                .as(select(COMMENT.asterisk())
+                        .from(COMMENT)
+                        .where(COMMENT.ARTICLE_ID.isNotNull())
+                        .unionAll(
+                                select(COMMENT.ID, COMMENT.BODY, COMMENT.PARENT_ID, field(commentArticle.append("article_id")))
+                                        .from(COMMENT)
+                                        .join(commentArticle)
+                                        .on(COMMENT.PARENT_ID.eq(field(commentArticle.append("id"), long.class)))))
+                .selectFrom(commentArticle)
+                .limit(1000)
                 .fetch()
                 .format(System.out);
     }
