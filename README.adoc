@@ -17,7 +17,7 @@ Create a database _test_ with owner _postgres_:
 create database test with owner postgres;
 ----
 
-Initialize the database from file link:src/main/sql/create-ddl-postgres.sql[].
+Initialize the database from file link:src/main/sql/create-ddl-postgres.sql[] and the DDL statements in link:src/main/sql/tree.sql[].
 Test it by executing the statement in link:src/main/sql/amount.sql[].
 Execute `./gradlew build` to build and test the application.
 

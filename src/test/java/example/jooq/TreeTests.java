@@ -1,15 +1,12 @@
 package example.jooq;
 
-import org.jooq.CommonTableExpression;
 import org.jooq.DSLContext;
-import org.jooq.Record2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static example.jooq.generated.Tables.COMMENT;
 import static org.jooq.impl.DSL.*;
-import static org.jooq.impl.SQLDataType.VARCHAR;
 
 @SpringBootTest
 public class TreeTests {
