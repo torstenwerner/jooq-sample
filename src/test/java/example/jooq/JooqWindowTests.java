@@ -2,6 +2,7 @@ package example.jooq;
 
 import example.jooq.generated.tables.Amount;
 import example.jooq.generated.tables.records.AmountRecord;
+import org.jooq.Record;
 import org.jooq.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
